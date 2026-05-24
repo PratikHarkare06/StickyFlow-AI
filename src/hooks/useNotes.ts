@@ -132,48 +132,70 @@ export function useNotes(userId?: string | null) {
   // ── Offline-friendly state updater + Firestore write ─────────────────────────
   const addNote = useCallback(async (content: string, category: string, color: string, reminderDate?: string, workspaceId?: string) => {
     const maxOrder = notes.reduce((m, n) => Math.max(m, (n as any).order ?? 0), -1);
+    const tempId = `temp-${Date.now()}`;
     
-    // Firestore explicitly rejects "undefined" values, so we use null or omit it entirely
-    const newNote: Omit<Note, 'id'> = {
-      content, category, color,
+    // Create new note with a temporary ID for immediate local render
+    const newNote: Note = {
+      id: tempId,
+      content,
+      category,
+      color,
       timestamp: new Date().toISOString(),
-      isPinned: false, isCompleted: false, isArchived: false,
-      reminderDate: reminderDate || undefined, // undefined works for local state
+      isPinned: false,
+      isCompleted: false,
+      isArchived: false,
+      reminderDate: reminderDate || undefined,
       subtasks: [],
-      workspaceId: workspaceId || 'default'
+      workspaceId: workspaceId || 'default',
+      status: 'todo',
+      activities: [{
+        id: Date.now().toString(),
+        type: 'created',
+        content: 'Note created',
+        timestamp: new Date().toISOString()
+      }]
     };
+
+    // 1. Optimistic Update: Instantly render in the UI
+    setNotes(prev => [newNote, ...prev]);
 
     if (userId) {
       setSyncing(true);
       
       const firestoreNote = { 
-        ...newNote, 
+        content,
+        category,
+        color,
         timestamp: serverTimestamp(), 
+        isPinned: false,
+        isCompleted: false,
+        isArchived: false,
+        reminderDate: reminderDate || null,
+        subtasks: [],
+        workspaceId: workspaceId || 'default',
+        status: 'todo',
         order: maxOrder + 1,
-        activities: [{
-          id: Date.now().toString(),
-          type: 'created',
-          content: 'Note created',
-          timestamp: new Date().toISOString()
-        }]
+        activities: newNote.activities
       };
-      if (!firestoreNote.reminderDate) {
-        firestoreNote.reminderDate = null as any; // Firestore accepts null
-      }
       
-      // Prevent infinite spinner if Firestore database isn't fully created yet or blocks writes
       const syncTimeout = setTimeout(() => setSyncing(false), 3000);
       
       try {
-        await addDoc(notesRef(userId), firestoreNote);
+        await addDoc(collection(db, 'users', userId, 'notes'), firestoreNote);
       } catch (e) { 
-        console.error('Error adding note to Firestore:', e); 
+        console.error('Error adding note to Firestore:', e);
+        // Revert the optimistic update on error
+        setNotes(prev => prev.filter(n => n.id !== tempId));
+        throw e; // rethrow so calling components can handle the error
       } finally {
         clearTimeout(syncTimeout);
         setSyncing(false);
       }
     } else {
-      setNotes(prev => [{ ...newNote, id: Date.now().toString() }, ...prev]);
+      // For guest/offline mode, persist the updated list to localStorage
+      const saved = localStorage.getItem('sticky_notes');
+      const localNotes = saved ? JSON.parse(saved) : [];
+      localStorage.setItem('sticky_notes', JSON.stringify([newNote, ...localNotes]));
     }
   }, [userId, notes]);
 

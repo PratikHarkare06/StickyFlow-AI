@@ -169,8 +169,13 @@ function MainApp({ user, logout, isOnline, setSkipAuth }: any) {
   }, [undoLast, toast]);
 
   const handleAddNote = React.useCallback(async (content: string, category: string, color: string, reminderDate?: string) => {
-    await addNote(content, category, color, reminderDate, currentWorkspaceId);
-    toast.success('✨ Note added!');
+    try {
+      await addNote(content, category, color, reminderDate, currentWorkspaceId);
+      toast.success('✨ Note added!');
+    } catch (e: any) {
+      console.error('Failed to save note:', e);
+      toast.error('❌ Failed to save note to Cloud. Check Firestore console/rules!');
+    }
   }, [addNote, toast, currentWorkspaceId]);
 
   // ── Bulk Selection ───────────────────────────────────────────────────────
