@@ -715,6 +715,19 @@ function MainApp({ user, logout, isOnline, setSkipAuth }: any) {
           }
         }}
       />
+
+      {/* Sidebar Mobile Overlay Backdrop */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden cursor-pointer"
+          />
+        )}
+      </AnimatePresence>
       
       {/* Onboarding — show only on first visit */}
       {showOnboarding && (
@@ -843,7 +856,7 @@ function MainApp({ user, logout, isOnline, setSkipAuth }: any) {
       />
 
       <main className={cn(
-        "flex-1 p-5 lg:p-10 overflow-y-auto custom-scrollbar h-screen bg-bg-app transition-all duration-500",
+        "flex-1 min-w-0 max-w-full p-5 lg:p-10 overflow-y-auto custom-scrollbar h-screen bg-bg-app transition-all duration-500",
         isSidebarOpen ? "lg:ml-60" : "ml-0"
       )}>
         <AnimatePresence mode="wait">

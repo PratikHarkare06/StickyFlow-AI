@@ -3,7 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <meta name="app-version" content="1.2.2" />
+    <title>StickyFlow — Intelligent Sticky Notes</title>
+    <script>
+      (function() {
+        const currentVersion = '1.2.2';
+        const lastVersion = localStorage.getItem('app-version');
+        if (lastVersion && lastVersion !== currentVersion) {
+          localStorage.setItem('app-version', currentVersion);
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+              let unregisteredCount = 0;
+              if (registrations.length === 0) {
+                window.location.reload(true);
+                return;
+              }
+              for (let registration of registrations) {
+                registration.unregister().then(function() {
+                  unregisteredCount++;
+                  if (unregisteredCount === registrations.length) {
+                    if (window.caches) {
+                      caches.keys().then(function(keys) {
+                        return Promise.all(keys.map(function(key) {
+                          return caches.delete(key);
+                        }));
+                      }).then(function() {
+                        window.location.reload(true);
+                      });
+                    } else {
+                      window.location.reload(true);
+                    }
+                  }
+                });
+              }
+            });
+          } else {
+            window.location.reload(true);
+          }
+        } else {
+          localStorage.setItem('app-version', currentVersion);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
