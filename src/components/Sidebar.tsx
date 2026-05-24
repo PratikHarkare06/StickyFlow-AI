@@ -137,12 +137,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               >
                 <div className="p-2 space-y-1 max-h-48 overflow-y-auto">
                   {workspaces.map(ws => (
-                    <div key={ws.id} className="flex items-center justify-between group/ws rounded-lg hover:bg-white/5 pr-2">
+                    <div key={ws.id} className="flex items-center justify-between group/ws rounded-lg hover:bg-text-app/5 pr-2">
                       <button 
                         onClick={() => { onWorkspaceChange(ws.id); setShowWorkspaceMenu(false); }}
                         className={cn(
-                          "flex-1 flex items-center gap-2 p-2 rounded-lg text-sm text-left transition-colors",
-                          currentWorkspaceId === ws.id ? "text-accent-blue font-bold" : "text-gray-400 hover:text-white"
+                          "flex-1 flex items-center gap-2 p-2 rounded-lg text-sm text-left transition-colors cursor-pointer",
+                          currentWorkspaceId === ws.id ? "text-accent-blue font-bold" : "text-gray-400 hover:text-text-app"
                         )}
                       >
                         <div className="w-2 h-2 rounded-full bg-current" />
@@ -158,7 +158,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
                 
                 {onAddWorkspace && (
-                  <div className="p-2 border-t border-border-app bg-black/20">
+                  <div className="p-2 border-t border-border-app bg-text-app/5">
                     {isAddingWorkspace ? (
                       <div className="flex gap-2">
                         <input 
@@ -173,13 +173,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             if (e.key === 'Escape') setIsAddingWorkspace(false);
                           }}
                           placeholder="Name..."
-                          className="w-full bg-black/50 border border-border-app rounded-lg px-2 py-1 text-sm outline-none focus:border-accent-blue"
+                          className="w-full bg-bg-app border border-border-app rounded-lg px-2 py-1 text-sm outline-none focus:border-accent-blue text-text-app"
                         />
                       </div>
                     ) : (
                       <button 
                         onClick={() => setIsAddingWorkspace(true)}
-                        className="w-full flex items-center gap-2 p-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+                        className="w-full flex items-center gap-2 p-2 rounded-lg text-sm text-gray-400 hover:text-text-app hover:bg-text-app/5 transition-colors cursor-pointer"
                       >
                         <Plus className="w-4 h-4" />
                         <span>New Workspace</span>

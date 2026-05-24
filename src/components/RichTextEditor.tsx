@@ -43,7 +43,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     editorProps: {
       attributes: {
         class: cn(
-          'prose prose-invert max-w-none focus:outline-none font-bold placeholder:text-white/30',
+          'prose max-w-none focus:outline-none font-bold text-text-app',
           className
         ),
         style: `min-height: ${minHeight};`,
@@ -67,7 +67,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   return (
     <div className="flex flex-col gap-4 w-full relative">
       {editable && (
-        <div className="flex flex-wrap items-center gap-1.5 p-2 bg-black/10 rounded-2xl border border-white/10 backdrop-blur-md">
+        <div className="flex flex-wrap items-center gap-1.5 p-2 bg-text-app/5 rounded-2xl border border-border-app/40 backdrop-blur-md">
           <MenuButton
             isActive={editor.isActive('bold')}
             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -86,7 +86,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             icon={<Strikethrough className="w-4 h-4" />}
             title="Strikethrough"
           />
-          <div className="w-px h-5 bg-white/10 mx-1" />
+          <div className="w-px h-5 bg-border-app/40 mx-1" />
           <MenuButton
             isActive={editor.isActive('bulletList')}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -105,7 +105,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             icon={<CheckSquare className="w-4 h-4" />}
             title="Task List"
           />
-          <div className="w-px h-5 bg-white/10 mx-1" />
+          <div className="w-px h-5 bg-border-app/40 mx-1" />
           <MenuButton
             isActive={editor.isActive('blockquote')}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -139,10 +139,10 @@ const MenuButton: React.FC<MenuButtonProps> = ({ isActive, onClick, icon, title 
     onClick={onClick}
     title={title}
     className={cn(
-      "p-2 rounded-xl transition-all",
+      "p-2 rounded-xl transition-all cursor-pointer",
       isActive 
-        ? "bg-white text-black shadow-lg scale-105" 
-        : "text-white/60 hover:text-white hover:bg-white/10 active:scale-95"
+        ? "bg-text-app text-bg-app shadow-lg scale-105 font-bold" 
+        : "text-text-app/60 hover:text-text-app hover:bg-text-app/10 active:scale-95"
     )}
     type="button"
   >
