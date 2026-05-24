@@ -844,7 +844,7 @@ function MainApp({ user, logout, isOnline, setSkipAuth }: any) {
 
       <main className={cn(
         "flex-1 p-5 lg:p-10 overflow-y-auto custom-scrollbar h-screen bg-bg-app transition-all duration-500",
-        isSidebarOpen ? "lg:ml-60" : "ml-0 pl-20 lg:pl-28"
+        isSidebarOpen ? "lg:ml-60" : "ml-0"
       )}>
         <AnimatePresence mode="wait">
           <motion.div

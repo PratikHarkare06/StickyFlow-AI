@@ -153,7 +153,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
             className="fixed bottom-6 right-6 z-50 w-80 sm:w-96 h-[500px] max-h-[80vh] bg-card-app border border-border-app rounded-3xl shadow-2xl overflow-hidden flex flex-col"
           >
             {/* Header */}
-            <div className="p-4 border-b border-border-app flex items-center justify-between bg-black/20">
+            <div className="p-4 border-b border-border-app flex items-center justify-between bg-text-app/5">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
                   <Bot className="w-5 h-5" />
@@ -165,7 +165,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                className="p-2 text-text-app/50 hover:text-text-app hover:bg-text-app/10 rounded-xl transition-all"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -175,10 +175,10 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map(msg => (
                 <div key={msg.id} className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
-                  <div className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center ${msg.role === 'user' ? 'bg-text-app/10 text-white' : 'bg-accent-blue/20 text-accent-blue'}`}>
+                  <div className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center ${msg.role === 'user' ? 'bg-text-app/10 text-text-app' : 'bg-accent-blue/20 text-accent-blue'}`}>
                     {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-accent-blue text-black rounded-tr-sm' : 'bg-text-app/5 text-gray-300 rounded-tl-sm'}`}>
+                  <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-accent-blue text-black rounded-tr-sm font-semibold' : 'bg-text-app/5 text-text-app/90 rounded-tl-sm font-medium'}`}>
                     {msg.content}
                   </div>
                 </div>
@@ -190,7 +190,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
                   </div>
                   <div className="p-3 rounded-2xl bg-text-app/5 rounded-tl-sm flex items-center gap-2">
                     <Loader2 className="w-4 h-4 text-accent-blue animate-spin" />
-                    <span className="text-xs text-gray-500 font-medium">Thinking...</span>
+                    <span className="text-xs text-text-app/50 font-semibold">Thinking...</span>
                   </div>
                 </div>
               )}
@@ -198,15 +198,15 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-border-app bg-black/20">
-              <div className="flex items-center gap-2 bg-black/40 border border-border-app rounded-2xl p-2 focus-within:border-accent-blue/50 transition-colors">
+            <div className="p-4 border-t border-border-app bg-text-app/5">
+              <div className="flex items-center gap-2 bg-text-app/5 border border-border-app/40 rounded-2xl p-2 focus-within:border-accent-blue/50 transition-colors">
                 <input
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSend()}
                   placeholder="Ask about your notes..."
-                  className="flex-1 bg-transparent text-sm text-white px-2 py-1 outline-none"
+                  className="flex-1 bg-transparent text-sm text-text-app px-2 py-1 outline-none placeholder-text-app/40"
                 />
                 <button
                   onClick={handleSend}
