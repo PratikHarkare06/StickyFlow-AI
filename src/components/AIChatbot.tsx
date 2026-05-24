@@ -178,7 +178,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
                   <div className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center ${msg.role === 'user' ? 'bg-text-app/10 text-text-app' : 'bg-accent-blue/20 text-accent-blue'}`}>
                     {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-accent-blue text-black rounded-tr-sm font-semibold' : 'bg-text-app/5 text-text-app/90 rounded-tl-sm font-medium'}`}>
+                  <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-accent-blue text-black rounded-tr-sm font-semibold' : 'bg-text-app/5 text-text-app rounded-tl-sm font-medium'}`}>
                     {msg.content}
                   </div>
                 </div>
