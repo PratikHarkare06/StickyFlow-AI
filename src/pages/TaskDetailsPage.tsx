@@ -112,7 +112,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
         return;
       }
 
-      const res = await fetch('/api/nvidia/v1/chat/completions', {
+      const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
         return;
       }
       
-      const res = await fetch('/api/nvidia/v1/chat/completions', {
+      const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
     setShowAiMenu(false);
     try {
       const plainText = new DOMParser().parseFromString(note.content, 'text/html').body.textContent || '';
-      const res = await fetch('/api/nvidia/v1/chat/completions', {
+      const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

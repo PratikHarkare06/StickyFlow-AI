@@ -67,7 +67,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
         { role: 'user', content: userMessage.content }
       ];
 
-      const res = await fetch('/api/nvidia/v1/chat/completions', {
+      const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
