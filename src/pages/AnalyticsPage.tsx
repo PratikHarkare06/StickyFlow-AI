@@ -24,6 +24,11 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ notes }) => {
   const [range, setRange] = useState<'7d' | '30d' | 'all'>('7d');
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const stats = useMemo(() => {
     const now = new Date();
@@ -172,39 +177,43 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ notes })
           </div>
         </div>
         <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={stats.dailyActivity}>
-              <defs>
-                <linearGradient id="colorCreated" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#A5C9FF" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#A5C9FF" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorCompleted" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis 
-                dataKey="date" 
-                tick={{ fill: '#6B7280', fontSize: 10, fontWeight: 700 }} 
-                axisLine={false} 
-                tickLine={false}
-                interval={range === '30d' ? 4 : range === 'all' ? 10 : 0}
-              />
-              <YAxis hide />
-              <Tooltip 
-                contentStyle={{ 
-                  background: 'var(--card-app)', 
-                  border: '1px solid var(--border-app)', 
-                  borderRadius: '1rem',
-                  fontSize: '11px',
-                  fontWeight: 700
-                }}
-              />
-              <Area type="monotone" dataKey="created" stroke="#A5C9FF" strokeWidth={2.5} fill="url(#colorCreated)" />
-              <Area type="monotone" dataKey="completed" stroke="#10B981" strokeWidth={2} fill="url(#colorCompleted)" />
-            </AreaChart>
-          </ResponsiveContainer>
+          {mounted ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={stats.dailyActivity}>
+                <defs>
+                  <linearGradient id="colorCreated" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#A5C9FF" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#A5C9FF" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorCompleted" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis 
+                  dataKey="date" 
+                  tick={{ fill: '#6B7280', fontSize: 10, fontWeight: 700 }} 
+                  axisLine={false} 
+                  tickLine={false}
+                  interval={range === '30d' ? 4 : range === 'all' ? 10 : 0}
+                />
+                <YAxis hide />
+                <Tooltip 
+                  contentStyle={{ 
+                    background: 'var(--card-app)', 
+                    border: '1px solid var(--border-app)', 
+                    borderRadius: '1rem',
+                    fontSize: '11px',
+                    fontWeight: 700
+                  }}
+                />
+                <Area type="monotone" dataKey="created" stroke="#A5C9FF" strokeWidth={2.5} fill="url(#colorCreated)" />
+                <Area type="monotone" dataKey="completed" stroke="#10B981" strokeWidth={2} fill="url(#colorCompleted)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-full w-full bg-text-app/5 rounded-[1.5rem] animate-pulse" />
+          )}
         </div>
         <div className="flex gap-6 mt-4">
           <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
@@ -223,22 +232,26 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ notes })
           {stats.categoryData.length > 0 ? (
             <div className="flex items-center gap-8">
               <div className="w-40 h-40">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={stats.categoryData}
-                      cx="50%" cy="50%"
-                      innerRadius={40}
-                      outerRadius={70}
-                      paddingAngle={4}
-                      dataKey="value"
-                    >
-                      {stats.categoryData.map((entry, i) => (
-                        <Cell key={i} fill={entry.color} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+                {mounted ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={stats.categoryData}
+                        cx="50%" cy="50%"
+                        innerRadius={40}
+                        outerRadius={70}
+                        paddingAngle={4}
+                        dataKey="value"
+                      >
+                        {stats.categoryData.map((entry, i) => (
+                          <Cell key={i} fill={entry.color} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-full w-full bg-text-app/5 rounded-full animate-pulse" />
+                )}
               </div>
               <div className="flex-1 space-y-3">
                 {stats.categoryData.map(cat => {
@@ -268,18 +281,22 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ notes })
             Your most productive hour: <span className="text-accent-blue">{stats.peakHour.hour}</span> ({stats.peakHour.count} notes)
           </p>
           <div className="h-36">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={stats.hourlyData}>
-                <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-                  {stats.hourlyData.map((entry, i) => (
-                    <Cell 
-                      key={i} 
-                      fill={entry.hour === stats.peakHour.hour ? '#A5C9FF' : 'rgba(255,255,255,0.07)'}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            {mounted ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={stats.hourlyData}>
+                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                    {stats.hourlyData.map((entry, i) => (
+                      <Cell 
+                        key={i} 
+                        fill={entry.hour === stats.peakHour.hour ? '#A5C9FF' : 'rgba(255,255,255,0.07)'}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full w-full bg-text-app/5 rounded-[1rem] animate-pulse" />
+            )}
           </div>
           <div className="flex justify-between mt-2">
             <span className="text-[9px] font-bold text-gray-600">12am</span>
