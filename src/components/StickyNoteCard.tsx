@@ -53,6 +53,23 @@ export const StickyNoteCard: React.FC<StickyNoteCardProps> = ({
     zIndex: isDragging ? 50 : 1,
   };
 
+  const formatDate = (isoString: string) => {
+    try {
+      const date = new Date(isoString);
+      if (isNaN(date.getTime())) return isoString;
+      
+      const now = new Date();
+      const isToday = date.toDateString() === now.toDateString();
+      if (isToday) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+      
+      return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    } catch {
+      return isoString;
+    }
+  };
+
   return (
     <motion.div
       ref={setNodeRef}
@@ -124,7 +141,7 @@ export const StickyNoteCard: React.FC<StickyNoteCardProps> = ({
 
       <div className="flex justify-between items-center mt-4">
         <div className="text-[10px] font-black opacity-40 uppercase tracking-widest">
-          {note.timestamp}
+          {formatDate(note.timestamp)}
         </div>
         <div className="flex items-center gap-1.5 h-6 flex-wrap">
           {note.tags && note.tags.length > 0 && (

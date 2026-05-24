@@ -113,8 +113,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     setShowReminder(false);
   };
 
-  const pinnedNotes = notes.filter(n => n.isPinned);
-  const otherNotes = notes.filter(n => !n.isPinned);
+  const pinnedNotes = [...notes].filter(n => n.isPinned).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  const otherNotes = [...notes].filter(n => !n.isPinned).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
   const dynamicDistributionData = CATEGORIES.map(cat => ({
     name: cat.name,
