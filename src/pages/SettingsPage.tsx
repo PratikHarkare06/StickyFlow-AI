@@ -3,174 +3,245 @@ import {
   Monitor, 
   Mail, 
   Zap, 
-  Type as TypeIcon, 
   Moon, 
   Sun,
-  ChevronDown
+  Type
 } from 'lucide-react';
 import { cn } from '../types';
 
-export const SettingsPage: React.FC = () => {
+interface SettingsPageProps {
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+  fontFamily: string;
+  setFontFamily: (font: string) => void;
+  fontSize: string;
+  setFontSize: (size: string) => void;
+  accentColor: string;
+  setAccentColor: (color: string) => void;
+  notifications: any;
+  setNotifications: (updater: any) => void;
+}
+
+export const SettingsPage: React.FC<SettingsPageProps> = ({ 
+  theme, 
+  setTheme,
+  fontFamily,
+  setFontFamily,
+  fontSize,
+  setFontSize,
+  accentColor,
+  setAccentColor,
+  notifications,
+  setNotifications
+}) => {
   return (
-    <div className="grid grid-cols-3 gap-12 pb-12">
-      <div className="col-span-2 space-y-8">
-        <header>
-          <h2 className="text-4xl font-bold tracking-tight mb-1">Settings</h2>
-          <p className="text-gray-500">Manage your account preferences and customize your workspace experience.</p>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 pb-16 overflow-x-hidden">
+      <div className="lg:col-span-2 space-y-6 lg:space-y-8 mt-14 lg:mt-0">
+        <header className="lg:pr-[360px]">
+          <h2 className="text-3xl lg:text-4xl font-black tracking-tight mb-2">Settings</h2>
+          <p className="text-gray-400 font-bold text-sm lg:text-base">Manage your account preferences and customize your workspace experience.</p>
         </header>
 
         {/* Appearance Section */}
-        <section className="bg-card-dark border border-border-dark rounded-[2.5rem] p-10 space-y-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-sticky-blue/20 flex items-center justify-center text-sticky-blue">
-              <Monitor className="w-6 h-6" />
+        <section className="bg-card-app border border-border-app rounded-[2.5rem] p-8 lg:p-10 space-y-8 shadow-2xl">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-accent-blue/10 flex items-center justify-center text-accent-blue shadow-inner">
+              <Monitor className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-xl font-bold">Appearance</h3>
-              <p className="text-sm text-gray-500">Customize how StickyFlow looks on your screen</p>
+              <h3 className="text-xl font-black">Appearance</h3>
+              <p className="text-xs text-gray-500 font-bold">Customize how StickyFlow looks on your screen</p>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <p className="text-sm font-bold uppercase tracking-widest text-gray-400">Accent Color</p>
-            <div className="flex gap-4">
-              {['#2196F3', '#E91E63', '#FFEB3B', '#00E5FF', '#9C27B0', '#00E676'].map((color, i) => (
+          <div className="space-y-8">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Interface Theme</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button 
-                  key={color}
+                  onClick={() => setTheme('dark')}
                   className={cn(
-                    "w-10 h-10 rounded-full border-4 transition-all",
-                    i === 0 ? "border-white scale-110" : "border-transparent hover:scale-105"
+                    "bg-black border-2 rounded-[1.5rem] p-6 lg:p-8 flex flex-col items-center gap-4 group transition-all shadow-xl relative overflow-hidden",
+                    theme === 'dark' ? "border-accent-blue" : "border-transparent opacity-40 hover:opacity-100"
                   )}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
+                >
+                  <div className={cn("absolute inset-0 bg-accent-blue/5 transition-opacity", theme === 'dark' ? "opacity-100" : "opacity-0")} />
+                  <Moon className={cn("w-8 h-8 stroke-[2.5px] relative z-10", theme === 'dark' ? "text-accent-blue" : "text-gray-500")} />
+                  <span className={cn("font-black text-base relative z-10", theme === 'dark' ? "text-white" : "text-gray-500")}>Dark Mode</span>
+                </button>
+                <button 
+                  onClick={() => setTheme('light')}
+                  className={cn(
+                    "bg-white border-2 rounded-[1.5rem] p-6 lg:p-8 flex flex-col items-center gap-4 group transition-all shadow-xl relative overflow-hidden",
+                    theme === 'light' ? "border-accent-blue" : "border-transparent opacity-40 hover:opacity-100"
+                  )}
+                >
+                  <div className={cn("absolute inset-0 bg-black/5 transition-opacity", theme === 'light' ? "opacity-100" : "opacity-0")} />
+                  <Sun className={cn("w-8 h-8 stroke-[2.5px] relative z-10", theme === 'light' ? "text-accent-blue" : "text-gray-500")} />
+                  <span className={cn("font-black text-base relative z-10", theme === 'light' ? "text-black" : "text-gray-500")}>Light Mode</span>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Accent Color</p>
+              <div className="flex flex-wrap gap-4">
+                {['#A5C9FF', '#EC4899', '#FACC15', '#00E5FF', '#9C27B0', '#10B981'].map((color) => (
+                  <button 
+                    key={color}
+                    onClick={() => setAccentColor(color)}
+                    className={cn(
+                      "w-10 h-10 rounded-full border-2 transition-all shadow-lg",
+                      accentColor === color ? "border-current scale-110 shadow-accent-blue/20" : "border-transparent hover:scale-105"
+                    )}
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Typography Section */}
+        <section className="bg-card-app border border-border-app rounded-[2.5rem] p-8 lg:p-10 space-y-8 shadow-2xl">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-accent-blue/10 flex items-center justify-center text-accent-blue shadow-inner">
+              <Type className="w-7 h-7" />
+            </div>
+            <div>
+              <h3 className="text-xl font-black">Typography</h3>
+              <p className="text-xs text-gray-500 font-bold">Manage your interface font and text size</p>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <p className="text-sm font-bold uppercase tracking-widest text-gray-400">Interface Theme</p>
-            <div className="grid grid-cols-2 gap-4">
-              <button className="bg-black border-2 border-sticky-blue rounded-[2rem] p-6 flex flex-col items-center gap-3 group">
-                <Moon className="w-6 h-6 text-sticky-blue" />
-                <span className="font-bold">Dark Mode</span>
-              </button>
-              <button className="bg-white border-2 border-transparent rounded-[2rem] p-6 flex flex-col items-center gap-3 group hover:border-gray-200 transition-all">
-                <Sun className="w-6 h-6 text-gray-400 group-hover:text-black" />
-                <span className="font-bold text-gray-400 group-hover:text-black">Light Mode</span>
-              </button>
+          <div className="space-y-8">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Font Family</p>
+              <div className="flex flex-wrap gap-4">
+                {['Urbanist', 'Inter', 'Outfit', 'Plus Jakarta'].map((font) => (
+                  <button 
+                    key={font}
+                    onClick={() => setFontFamily(font)}
+                    className={cn(
+                      "px-6 py-3 rounded-2xl border-2 transition-all font-bold",
+                      fontFamily === font ? "border-accent-blue bg-accent-blue/5 text-text-app" : "border-border-app text-gray-500 hover:border-gray-500"
+                    )}
+                  >
+                    {font}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Font Size</p>
+              <div className="flex flex-wrap gap-4">
+                {['Small', 'Normal', 'Large', 'Extra Large'].map((size) => (
+                  <button 
+                    key={size}
+                    onClick={() => setFontSize(size)}
+                    className={cn(
+                      "px-6 py-3 rounded-2xl border-2 transition-all font-bold",
+                      fontSize === size ? "border-accent-blue bg-accent-blue/5 text-text-app" : "border-border-app text-gray-500 hover:border-gray-500"
+                    )}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Notifications Section */}
-        <section className="bg-card-dark border border-border-dark rounded-[2.5rem] p-10 space-y-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-sticky-pink/20 flex items-center justify-center text-sticky-pink">
-              <Zap className="w-6 h-6" />
+        <section className="bg-card-app border border-border-app rounded-[2.5rem] p-8 lg:p-10 space-y-8 shadow-2xl">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-sticky-pink/10 flex items-center justify-center text-sticky-pink shadow-inner">
+              <Zap className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-xl font-bold">Notifications</h3>
-              <p className="text-sm text-gray-500">Control when and how you want to be alerted</p>
+              <h3 className="text-xl font-black">Notifications</h3>
+              <p className="text-xs text-gray-500 font-bold">Control when and how you want to be alerted</p>
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-1">
             {[
-              { title: 'Desktop Notifications', desc: 'Receive alerts directly on your computer desktop', icon: Monitor, enabled: true },
-              { title: 'Email Digests', desc: 'Weekly summary of your completed tasks and upcoming deadlines', icon: Mail, enabled: false },
-              { title: 'Smart Reminders', desc: 'AI-powered reminders based on your peak productivity hours', icon: Zap, enabled: true },
-            ].map((item) => (
-              <div key={item.title} className="flex justify-between items-center py-4 border-b border-white/5 last:border-0">
-                <div>
-                  <h4 className="font-bold mb-1">{item.title}</h4>
-                  <p className="text-sm text-gray-500">{item.desc}</p>
+              { id: 'desktop', title: 'Desktop Notifications', desc: 'Receive alerts directly on your computer desktop', icon: Monitor },
+              { id: 'email', title: 'Email Digests', desc: 'Weekly summary of your completed tasks', icon: Mail },
+              { id: 'smart', title: 'Smart Reminders', desc: 'AI-powered reminders based on your peak hours', icon: Zap },
+            ].map((item) => {
+              const itemEnabled = notifications[item.id as keyof typeof notifications];
+              return (
+                <div key={item.title} className="flex justify-between items-center py-6 border-b border-border-app last:border-0 hover:bg-black/5 transition-colors rounded-2xl px-3 group">
+                  <div>
+                    <h4 className="font-black mb-1 text-base lg:text-lg group-hover:text-text-app transition-colors">{item.title}</h4>
+                    <p className="text-xs lg:text-sm text-gray-500 font-bold max-w-sm">{item.desc}</p>
+                  </div>
+                  <button 
+                    onClick={() => setNotifications(prev => ({ ...prev, [item.id]: !itemEnabled }))}
+                    className={cn(
+                      "w-14 h-7 rounded-full relative transition-all duration-300 shadow-inner flex items-center px-1",
+                      itemEnabled ? "bg-accent-blue" : "bg-text-app/10"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-5 h-5 bg-white rounded-full transition-all shadow-md",
+                      itemEnabled ? "translate-x-7" : "translate-x-0"
+                    )} />
+                  </button>
                 </div>
-                <button className={cn(
-                  "w-12 h-6 rounded-full relative transition-colors",
-                  item.enabled ? "bg-sticky-blue" : "bg-white/10"
-                )}>
-                  <div className={cn(
-                    "absolute top-1 w-4 h-4 bg-white rounded-full transition-all",
-                    item.enabled ? "right-1" : "left-1"
-                  )} />
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
-        {/* Typography Section */}
-        <section className="bg-card-dark border border-border-dark rounded-[2.5rem] p-10 space-y-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-sticky-yellow/20 flex items-center justify-center text-sticky-yellow">
-              <TypeIcon className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold">Typography</h3>
-              <p className="text-sm text-gray-500">Adjust the reading experience of your notes</p>
-            </div>
-          </div>
-
-          <div className="space-y-12">
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <p className="text-sm font-bold uppercase tracking-widest text-gray-400">Font Size</p>
-                <span className="bg-white/5 px-3 py-1 rounded-lg text-xs font-bold text-sticky-blue">16px (Default)</span>
-              </div>
-              <div className="relative h-1 bg-white/5 rounded-full">
-                <div className="absolute top-1/2 -translate-y-1/2 left-[40%] w-5 h-5 bg-sticky-blue rounded-full border-4 border-card-dark shadow-lg shadow-blue-500/20" />
-                <div className="flex justify-between px-1 mt-4">
-                  {[12, 14, 16, 18, 20, 24].map(size => (
-                    <div key={size} className="w-1 h-1 bg-white/10 rounded-full" />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-sm font-bold uppercase tracking-widest text-gray-400">Font Family</p>
-              <button className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 flex justify-between items-center group hover:border-white/20 transition-all">
-                <span className="text-lg font-medium">Urbanist</span>
-                <ChevronDown className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <div className="flex justify-end gap-4 pt-6">
-          <button className="px-8 py-4 font-bold text-gray-500 hover:text-white transition-colors">Discard Changes</button>
-          <button className="bg-sticky-blue px-10 py-4 rounded-2xl font-bold shadow-lg shadow-blue-500/20 hover:scale-105 transition-transform">Save Preferences</button>
+        <div className="flex flex-col sm:flex-row justify-center lg:justify-end items-center gap-8 pt-8 pb-4">
+          <button 
+            onClick={() => alert('Changes discarded')}
+            className="font-black text-gray-500 hover:text-text-app transition-colors uppercase tracking-[0.2em] text-[10px]"
+          >
+            Discard Changes
+          </button>
+          <button 
+            onClick={() => alert('Preferences saved successfully!')}
+            className="bg-accent-blue text-black px-10 py-5 rounded-full font-black shadow-2xl shadow-blue-400/20 hover:scale-105 active:scale-95 transition-all text-sm min-w-[200px] flex items-center justify-center whitespace-nowrap"
+          >
+            Save Preferences
+          </button>
         </div>
       </div>
 
       {/* Sidebar Stats */}
-      <div className="space-y-8">
-        <section className="bg-card-dark border border-border-dark rounded-[2.5rem] p-8 space-y-6">
-          <h3 className="text-xl font-bold">Quick Stats</h3>
-          <div className="bg-black/20 rounded-3xl p-6 border border-white/5">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Productivity Score</p>
-            <p className="text-4xl font-bold mb-4">84%</p>
-            <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-              <div className="bg-sticky-purple h-full w-[84%]" />
+      <div className="space-y-6 lg:space-y-8 mt-6 lg:mt-0">
+        <section className="bg-card-app border border-border-app rounded-[2rem] lg:rounded-[2.5rem] p-8 space-y-8 shadow-xl">
+          <h3 className="text-xl font-black uppercase tracking-widest text-gray-500 text-[10px]">Quick Stats</h3>
+          <div className="bg-black/5 rounded-[1.5rem] p-8 border border-border-app space-y-6">
+            <div>
+              <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-2">Productivity Score</p>
+              <p className="text-5xl font-black tracking-tighter">84<span className="text-2xl text-accent-blue ml-1">%</span></p>
+            </div>
+            <div className="w-full bg-black/10 h-3 rounded-full overflow-hidden shadow-inner">
+              <div className="bg-accent-blue h-full w-[84%] shadow-[0_0_15px_rgba(165,201,255,0.3)]" />
             </div>
           </div>
         </section>
 
-        <section className="bg-card-dark border border-border-dark rounded-[2.5rem] p-8 space-y-6">
-          <h3 className="text-xl font-bold">Upcoming Deadlines</h3>
-          <div className="space-y-6">
-            <div className="flex gap-4">
-              <div className="w-1 h-12 bg-sticky-orange rounded-full" />
+        <section className="bg-card-app border border-border-app rounded-[2rem] lg:rounded-[2.5rem] p-8 space-y-8 shadow-xl">
+          <h3 className="text-xl font-black uppercase tracking-widest text-gray-500 text-[10px]">Upcoming</h3>
+          <div className="space-y-8">
+            <div className="flex gap-6 group cursor-pointer">
+              <div className="w-1.5 h-16 bg-sticky-pink rounded-full group-hover:w-2 transition-all" />
               <div>
-                <h4 className="font-bold">App Redesign</h4>
-                <p className="text-xs text-gray-500">Tomorrow, 10:00 AM</p>
+                <h4 className="font-black text-lg group-hover:text-sticky-pink transition-colors">App Redesign</h4>
+                <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mt-1">Tomorrow, 10:00 AM</p>
               </div>
             </div>
-            <div className="flex gap-4">
-              <div className="w-1 h-12 bg-sticky-blue rounded-full" />
+            <div className="flex gap-6 group cursor-pointer">
+              <div className="w-1.5 h-16 bg-accent-blue rounded-full group-hover:w-2 transition-all" />
               <div>
-                <h4 className="font-bold">Client Meeting</h4>
-                <p className="text-xs text-gray-500">Oct 28, 2:30 PM</p>
+                <h4 className="font-black text-lg group-hover:text-accent-blue transition-colors">Client Meeting</h4>
+                <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mt-1">Oct 28, 2:30 PM</p>
               </div>
             </div>
           </div>

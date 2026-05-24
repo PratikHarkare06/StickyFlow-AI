@@ -1,24 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&family=Inter:wght@400..900&family=Outfit:wght@400..900&family=Plus+Jakarta+Sans:wght@400..800&display=swap');
+
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Urbanist", ui-sans-serif, system-ui, sans-serif;
   
-  --color-bg-dark: #050505;
-  --color-card-dark: #151619;
-  --color-border-dark: #2A2B2F;
+  --color-bg-app: var(--bg-app);
+  --color-sidebar-app: var(--sidebar-app);
+  --color-card-app: var(--card-app);
+  --color-border-app: var(--border-app);
+  --color-text-app: var(--text-app);
   
-  --color-sticky-yellow: #FFEB3B;
-  --color-sticky-blue: #2196F3;
-  --color-sticky-pink: #E91E63;
-  --color-sticky-green: #00E676;
-  --color-sticky-purple: #9C27B0;
-  --color-sticky-orange: #FF9800;
-  --color-sticky-cyan: #00E5FF;
+  --color-accent-blue: var(--accent-color, #A5C9FF);
+  
+  --color-sticky-yellow: #FACC15;
+  --color-sticky-pink: #EC4899;
+  --color-sticky-blue: #3B82F6;
+  --color-sticky-green: #10B981;
+  --color-sticky-purple: #8B5CF6;
+  --color-sticky-orange: #F59E0B;
+  --color-sticky-cyan: #06B6D4;
+}
+
+:root {
+  --bg-app: #06070B;
+  --sidebar-app: #0B0F17;
+  --card-app: #151619;
+  --border-app: #1F2128;
+  --text-app: #ffffff;
+}
+
+[data-theme='light'] {
+  --bg-app: #F8FAFC;
+  --sidebar-app: #FFFFFF;
+  --card-app: #FFFFFF;
+  --border-app: #E2E8F0;
+  --text-app: #0F172A;
 }
 
 @layer base {
   body {
-    @apply bg-bg-dark text-white font-sans antialiased;
+    @apply bg-bg-app text-text-app font-sans antialiased;
   }
 }
 
@@ -31,9 +53,131 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full;
+  @apply bg-text-app/10 rounded-full;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-white/20;
+  @apply bg-text-app/20;
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: inherit;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding: 0 1.2rem;
+  margin: 1rem 0;
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+}
+
+.ProseMirror ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label {
+  margin-right: 0.8rem;
+  user-select: none;
+  cursor: pointer;
+  margin-top: 0.2rem;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label input[type="checkbox"] {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.375rem;
+  background-color: transparent;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label input[type="checkbox"]:checked {
+  background-color: currentColor;
+  border-color: currentColor;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 0.3rem;
+  height: 0.6rem;
+  border: solid rgba(0,0,0,0.8);
+  border-width: 0 2px 2px 0;
+}
+
+.ProseMirror .is-checked {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid currentColor;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.ProseMirror pre {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  color: #fff;
+  font-family: inherit;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: monospace;
+  font-size: 0.9em;
+  overflow-x: auto;
+}
+
+.ProseMirror code {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.4rem;
+  color: inherit;
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Skeleton shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
 }
