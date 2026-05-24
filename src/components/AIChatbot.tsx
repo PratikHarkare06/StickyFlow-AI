@@ -82,7 +82,16 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
         })
       });
 
-      if (!res.ok) throw new Error('API request failed');
+      if (!res.ok) {
+        let errMsg = `API request failed with status ${res.status}`;
+        try {
+          const errData = await res.json();
+          if (errData?.error?.message) {
+            errMsg = errData.error.message;
+          }
+        } catch {}
+        throw new Error(errMsg);
+      }
 
       const reader = res.body?.getReader();
       const decoder = new TextDecoder('utf-8');

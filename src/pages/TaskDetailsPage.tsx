@@ -181,6 +181,13 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
       });
       
       const data = await res.json();
+      
+      if (!res.ok) {
+        const errMsg = data?.error?.message ?? res.statusText;
+        setAiSummary(`⚠️ API Error: ${errMsg}`);
+        return;
+      }
+
       const text = data?.choices?.[0]?.message?.content;
       if (text) {
         const jsonMatch = text.match(/\[.*\]/s);
@@ -230,6 +237,13 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
       });
       
       const data = await res.json();
+      
+      if (!res.ok) {
+        const errMsg = data?.error?.message ?? res.statusText;
+        setAiSummary(`⚠️ API Error: ${errMsg}`);
+        return;
+      }
+
       let text = data?.choices?.[0]?.message?.content?.trim();
       if (text) text = text.replace(/['".]/g, ''); // Remove punctuation
       if (text && CATEGORIES.some(c => c.name === text)) {
