@@ -1026,9 +1026,18 @@ function App() {
   const [skipAuth, setSkipAuth] = useState(() => localStorage.getItem('skip_auth') === 'true');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-  // Listen for 'skip-auth' event from LoginPage guest button
+  // Listen for 'skip-auth' event from LoginPage guest button / Sidebar logout button
   useEffect(() => {
-    const handler = () => { setSkipAuth(true); localStorage.setItem('skip_auth', 'true'); };
+    const handler = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const isSkip = customEvent.detail !== false;
+      setSkipAuth(isSkip);
+      if (isSkip) {
+        localStorage.setItem('skip_auth', 'true');
+      } else {
+        localStorage.removeItem('skip_auth');
+      }
+    };
     window.addEventListener('skip-auth', handler);
     return () => window.removeEventListener('skip-auth', handler);
   }, []);
