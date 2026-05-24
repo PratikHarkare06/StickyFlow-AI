@@ -1,103 +1,101 @@
 # 🧠 StickyFlow AI: The Ultimate Productivity Workspace & Fluid Sticky Notes
 
-StickyFlow AI is a high-performance, glassmorphic productivity hub built on React, Vite, and TailwindCSS. It brings smooth animations, dynamic layout alignments, real-time Firestore sync, and direct NVIDIA AI context-aware assistant features to your fingertips.
+StickyFlow AI is a high-fidelity, production-grade productivity dashboard engineered with a responsive, glassmorphic layout. It bridges fast local interactions with real-time Firebase syncing, and features an integrated NVIDIA AI assistant to analyze, query, and organize your tasks.
 
 ---
 
 ## ⚡ Stunning Premium Features
 
-### 1. 🤖 Context-Aware AI Chatbot
-- Powered by Nvidia LLMs (`minimaxai/minimax-m2.7`).
-- Seamlessly scans, reads, and understands your entire directory of sticky notes.
-- Instant, context-rich Q&A to search, categorize, and extract insights from your tasks.
+### 1. 🤖 Nvidia AI Chatbot Integration
+- **Context-Aware Analytics**: Scans your entire active sticky notes directory instantly.
+- **Natural Language Querying**: Talk to your notes, ask for dynamic summaries, search task deadlines, or ask for planning suggestions.
+- **Offline / Setup Safe**: Alerts you cleanly if the API key is missing.
 
-### 2. 📈 Immersive Analytics & Productivity Insights
-- **KPI Metrics Tracker**: Streamlines active metrics such as total flows, completion rates, daily streaks, and average note length.
-- **Visual Trends**: Beautiful interactive Area charts and Category breakdown charts powered by Recharts.
-- **Peak Hour Analysis**: Tells you exactly when you are most productive during the day.
+### 2. 📈 Interactive Heatmaps & Chronological Timelines
+- **Activity Heatmap**: A GitHub-style contribution grid displaying daily note modifications, creation rates, and update density.
+- **Chronological Timeline**: Keeps a full audit log of your actions (creations, archives, updates, pin/unpin toggles) for easy visual reviews.
 
 ### 3. 🗓️ Visual Calendar Grid
-- Fully interactive visual month calendar view.
-- Pins specific notes and deadlines directly to calendar days with category-specific color indicators.
-- Quick panels displaying events and notes for any selected date.
+- Visualize deadlines, reminders, and created flows in an elegant month navigator layout.
+- Fast day-selection filters to show daily checklists, subtasks, and note cards.
 
 ### 4. 🗂️ Drag-and-Drop Kanban Board
-- Organized multi-stage task board ("To Do", "In Progress", "Done").
-- Smooth, physics-based reordering and status transfers powered by standard drag handles.
+- Multi-stage productivity lane layout ("To Do", "In Progress", "Done").
+- Smooth, drag-and-drop cards with quick-edit trigger handles.
 
-### 5. ⏲️ Glassmorphic Focus Pomodoro
-- Interactive custom-session countdown widget.
-- Sound notifications and visual indicators to maintain state during active deep-work flows.
+### 5. ⏲️ Custom Focus Pomodoro & Notifications
+- Elegant circular progress countdown timer with sound controls.
+- Toast notifications and system alerts that preserve focus sessions when switching view pages.
 
-### 6. 🛠️ Pro-Grade Note Formatting & Operations
-- **Rich Text Editing**: Powered by Tiptap Editor for styling, checklists, and visual structures.
-- **Bulk Actions**: Select, delete, archive, or complete multiple notes at once.
-- **Recurrence & Reminders**: Configurable repeat triggers (Daily, Weekly, Monthly) and precise reminders.
-- **Self-Healing Trash**: Keeps deleted notes safe for 30 days before automatic purge, with simple restore buttons.
+### 6. ⚡ Power-User Keyboard Shortcuts
+Quickly navigate, search, and manage your flows without lifting your hands from the keyboard:
+- `Cmd / Ctrl + K` — Opens the **Global Command Menu**
+- `N` — Instantly creates a **New Flow**
+- `F` — Focuses the **Search input**
+- `P` — Opens the **Pomodoro Focus Timer**
+- `K` — Swaps to **Kanban Board** view
+- `C` — Swaps to **Calendar** view
 
----
-
-## 💻 Modern Technology Stack
-
-- **Core Framework**: React 19 & TypeScript (strict compilation).
-- **Build Tool**: Vite (blazing fast hot-reloads).
-- **Styling**: TailwindCSS & Lucide React for consistent icons.
-- **Animation System**: Framer Motion / Motion for premium transitions.
-- **Data Visualizations**: Recharts.
-- **Database / Authentication**: Firebase Firestore and Firebase Auth (offline-first sync).
+### 7. 📄 Rich Templates & Text Editing
+- **Interactive Tiptap Editor**: Native support for headings, lists, inline code, bold/italics, and inline checklists.
+- **Media Attachments**: Drag and drop or upload image attachments directly into note details.
+- **Preset Templates**: Instantly spin up a Daily Standup flow, Weekly Plan flow, Brainstorming canvas, or Meeting Minutes template.
 
 ---
 
-## 🚀 Getting Started & Local Development
+## 💻 Tech Stack & Architecture
 
-### 1. Clone the Repository
+- **React 19 & TypeScript**: Zero type warnings, clean compiler configuration.
+- **Vite & TailwindCSS**: Optimized CSS pipelines, lightning-fast rendering.
+- **Framer Motion**: Micro-animations and layout shifts.
+- **Firestore & Firebase Auth**: High-availability data pipelines with off-line local cache caching fallback.
+- **Recharts**: Data-driven, fully responsive productivity curves.
+
+---
+
+## 🚀 Local Development Setup
+
+### 1. Clone & Install
 ```bash
 git clone https://github.com/PratikHarkare06/StickyFlow-AI.git
 cd StickyFlow-AI
-```
-
-### 2. Install Dependencies
-```bash
 npm install
 ```
 
-### 3. Setup Environment Variables
-Create a file named `.env.local` in the root directory and add your keys:
+### 2. Configure Environment Variables
+Create a `.env.local` file in the root workspace folder:
 ```env
-# Firebase Configuration
+# Firebase API Credentials
 VITE_FIREBASE_API_KEY="your-api-key"
-VITE_FIREBASE_AUTH_DOMAIN="your-project-id.firebaseapp.com"
+VITE_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
 VITE_FIREBASE_PROJECT_ID="your-project-id"
-VITE_FIREBASE_STORAGE_BUCKET="your-project-id.appspot.com"
+VITE_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
 VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
 VITE_FIREBASE_APP_ID="your-app-id"
 
-# Nvidia AI API Key
-VITE_NVIDIA_API_KEY="your-nvapi-key"
+# Nvidia Chat Completion API Key
+VITE_NVIDIA_API_KEY="your-nvidia-api-key"
 ```
 
-### 4. Spin Up the Development Server
+### 3. Start Development Server
 ```bash
 npm run dev
 ```
-Open your browser and navigate to `http://localhost:8000`.
+Runs the Vite hot-reloading server on `http://localhost:8000`.
 
-### 5. Production Build & Linting
-Ensure type-safety and bundle size are optimal before deployment:
+### 4. Build & Production Check
+Ensure everything is fully compiled and linted with zero errors:
 ```bash
-# Run TypeScript compilation check
+# Verify TypeScript safety checks
 npm run lint
 
-# Build production bundle
+# Build optimized production bundle
 npm run build
 ```
 
 ---
 
-## 🎨 Layout Alignment & Responsive Polish
-All primary page views implement a fluid grid layout wrapper alongside custom responsive sidebars. Page headers are configured with `lg:pr-[360px]` to guarantee zero visual collisions with the floating top-right status badges on large monitor viewports.
-
----
-
-## 📜 License
-This project is licensed under the MIT License.
+## 📐 Layout Padding & Visual Standards
+To clear the floating top-right workspace status bar (sync indicators, Auth badges, focus widgets), all headers implement the standard class:
+`lg:pr-[360px]`
+This guarantees a clean spacing wrapper with **zero overlapping elements** on large monitors, widescreen viewports, and mobile transitions.
