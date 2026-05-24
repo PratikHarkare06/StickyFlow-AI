@@ -216,9 +216,9 @@ export const RemindersPage: React.FC<RemindersPageProps> = ({
             <p className="text-xs font-bold text-sticky-pink/60 mb-6">You have {overdueNotes.length} tasks that need immediate attention.</p>
             <div className="space-y-4">
               {overdueNotes.slice(0, 2).map(note => (
-                <div key={note.id} className="bg-black/20 rounded-2xl p-4">
-                  <p className="text-xs font-black text-white line-clamp-1">{note.content}</p>
-                  <p className="text-[10px] font-bold text-white/40 mt-1 uppercase">Due Yesterday</p>
+                <div key={note.id} className="bg-text-app/5 border border-border-app/40 rounded-2xl p-4">
+                  <p className="text-xs font-black text-text-app line-clamp-1">{note.content}</p>
+                  <p className="text-[10px] font-bold text-text-app/40 mt-1 uppercase">Due Yesterday</p>
                 </div>
               ))}
             </div>

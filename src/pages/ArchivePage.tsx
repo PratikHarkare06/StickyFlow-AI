@@ -90,7 +90,7 @@ export const ArchivePage: React.FC<ArchivePageProps> = ({
               <div className="absolute inset-0 bg-black/10 opacity-40" />
               
               <div className="relative z-10 flex justify-between items-start">
-                <span className="px-2 py-0.5 lg:px-2.5 lg:py-1 rounded-full bg-black/20 text-[7px] lg:text-[8px] font-black uppercase tracking-widest text-white">
+                <span className="px-2 py-0.5 lg:px-2.5 lg:py-1 rounded-full bg-black/20 text-[7px] lg:text-[8px] font-black uppercase tracking-widest text-current opacity-80">
                   {note.category}
                 </span>
                 <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -99,7 +99,7 @@ export const ArchivePage: React.FC<ArchivePageProps> = ({
                       e.stopPropagation();
                       onToggleArchive(note.id);
                     }}
-                    className="p-1.5 rounded-full hover:bg-black/20 transition-colors text-white"
+                    className="p-1.5 rounded-full hover:bg-black/20 transition-colors text-current"
                     title="Unarchive"
                   >
                     <RefreshCw className="w-4 h-4" />
@@ -109,19 +109,19 @@ export const ArchivePage: React.FC<ArchivePageProps> = ({
                       e.stopPropagation();
                       onDeleteNote(note.id);
                     }}
-                    className="p-1.5 rounded-full hover:bg-black/20 transition-colors text-white"
+                    className="p-1.5 rounded-full hover:bg-black/20 transition-colors text-current"
                   >
                     <MoreVertical className="w-4 h-4" />
                   </button>
                 </div>
               </div>
               
-              <p className="relative z-10 text-sm lg:text-base font-bold leading-tight line-clamp-4 mt-2 lg:mt-3 text-white/90 italic">
+              <p className="relative z-10 text-sm lg:text-base font-bold leading-tight line-clamp-4 mt-2 lg:mt-3 text-current opacity-70 italic">
                 {note.content}
               </p>
 
               <div className="relative z-10 flex justify-between items-end mt-4">
-                <div className="text-[10px] font-black opacity-60 uppercase tracking-widest text-white">
+                <div className="text-[10px] font-black opacity-50 uppercase tracking-widest text-current">
                   {note.timestamp}
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-black/20 flex items-center justify-center shadow-inner">

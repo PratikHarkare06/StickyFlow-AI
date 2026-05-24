@@ -477,14 +477,14 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
                         onClick={() => setEditCategory(cat.name)}
                         className={cn(
                           "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all",
-                          editCategory === cat.name ? "bg-white text-black shadow-lg" : "bg-black/10 text-white hover:bg-black/20"
+                          editCategory === cat.name ? "bg-white text-black shadow-lg" : "bg-black/15 text-current hover:bg-black/25 opacity-90"
                         )}
                       >
                         {cat.name}
                       </button>
                     ))
                   ) : (
-                    <span className="px-4 py-1.5 rounded-full bg-black/10 text-[10px] font-black uppercase tracking-widest text-white">
+                    <span className="px-4 py-1.5 rounded-full bg-black/10 text-[10px] font-black uppercase tracking-widest text-current opacity-80">
                       {note.category}
                     </span>
                   )}
