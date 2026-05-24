@@ -74,7 +74,7 @@ Answer the user's questions strictly based on this data. Be concise, helpful, an
           'Authorization': `Bearer ${nvidiaKey}`
         },
         body: JSON.stringify({
-          model: "minimaxai/minimax-m2.7",
+          model: "stepfun-ai/step-3.5-flash",
           messages: apiMessages,
           temperature: 0.3,
           max_tokens: 1024,

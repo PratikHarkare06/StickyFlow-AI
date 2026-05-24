@@ -119,7 +119,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
           'Authorization': `Bearer ${nvidiaKey}`
         },
         body: JSON.stringify({
-          model: "minimaxai/minimax-m2.7",
+          model: "stepfun-ai/step-3.5-flash",
           messages: [{ role: "user", content: `Summarize the following note into 3-5 concise bullet points. Be direct and actionable. Use bullet point symbols (•). Note content: "${plainText}"` }],
           temperature: 0.3,
           top_p: 0.95,
@@ -171,7 +171,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
           'Authorization': `Bearer ${nvidiaKey}`
         },
         body: JSON.stringify({
-          model: "minimaxai/minimax-m2.7",
+          model: "stepfun-ai/step-3.5-flash",
           messages: [{ role: "user", content: `Extract up to 5 clear action items from the following note. Return ONLY a JSON array of strings, nothing else. Note content: "${plainText}"` }],
           temperature: 0.1,
           top_p: 0.95,
@@ -227,7 +227,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
           'Authorization': `Bearer ${nvidiaKey}`
         },
         body: JSON.stringify({
-          model: "minimaxai/minimax-m2.7",
+          model: "stepfun-ai/step-3.5-flash",
           messages: [{ role: "user", content: `Categorize the following note into EXACTLY ONE of these categories: Work, Personal, Ideas, Urgent. Return ONLY the category name. Note content: "${plainText}"` }],
           temperature: 0.1,
           top_p: 0.95,
