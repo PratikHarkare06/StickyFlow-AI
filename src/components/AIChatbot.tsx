@@ -39,7 +39,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ notes }) => {
     setIsLoading(true);
 
     try {
-      const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY;
+      const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY?.replace(/['"]/g, '');
       if (!nvidiaKey) {
         setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "⚠️ Please add VITE_NVIDIA_API_KEY to your .env.local file to use the AI Assistant." }]);
         setIsLoading(false);

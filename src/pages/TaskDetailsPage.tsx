@@ -97,7 +97,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
   const handleAISummarize = async () => {
     if (!note) return;
 
-    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY;
+    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY?.replace(/['"]/g, '');
     if (!nvidiaKey) {
       setAiSummary('🔑 No NVIDIA API key found.\n\nAdd VITE_NVIDIA_API_KEY to your .env.local file.');
       return;
@@ -149,7 +149,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
 
   const handleAIExtractActionItems = async () => {
     if (!note) return;
-    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY;
+    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY?.replace(/['"]/g, '');
     if (!nvidiaKey) {
       setAiSummary('🔑 No NVIDIA API key found.');
       return;
@@ -210,7 +210,7 @@ export const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({
 
   const handleAICategorize = async () => {
     if (!note) return;
-    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY;
+    const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY?.replace(/['"]/g, '');
     if (!nvidiaKey) {
       setAiSummary('🔑 No NVIDIA API key found.');
       return;
