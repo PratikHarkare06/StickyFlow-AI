@@ -95,6 +95,28 @@ npm run build
 
 ---
 
+## 🌐 Netlify Deployment & Hosting Guide
+
+When deploying your StickyFlow AI hub to Netlify, keep in mind that `.env.local` is gitignored and is not uploaded. To prevent the Firebase `auth/invalid-api-key` error and keep the app functional:
+
+1. **Configure Environment Variables in Netlify**:
+   - Go to your Netlify dashboard: **Site configuration > Environment variables**.
+   - Click **Add a variable** and configure the following variables exactly as defined in your local `.env.local`:
+     - `VITE_FIREBASE_API_KEY`
+     - `VITE_FIREBASE_AUTH_DOMAIN`
+     - `VITE_FIREBASE_PROJECT_ID`
+     - `VITE_FIREBASE_STORAGE_BUCKET`
+     - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+     - `VITE_FIREBASE_APP_ID`
+     - `VITE_NVIDIA_API_KEY`
+2. **Build Settings**:
+   - **Build Command**: `npm run build`
+   - **Publish Directory**: `dist`
+3. **PWA Assets**:
+   - High-fidelity icons (`icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, and `favicon.ico`) are located in the `public/` directory and are automatically compiled and cached for progressive offline capabilities upon building.
+
+---
+
 ## 📐 Layout Padding & Visual Standards
 To clear the floating top-right workspace status bar (sync indicators, Auth badges, focus widgets), all headers implement the standard class:
 `lg:pr-[360px]`
