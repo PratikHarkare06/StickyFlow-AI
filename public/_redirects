@@ -1,0 +1,3 @@
+# Netlify Edge Redirect Rules
+/api/nvidia/*  https://integrate.api.nvidia.com/:splat  200!
+/*             /index.html                              200
